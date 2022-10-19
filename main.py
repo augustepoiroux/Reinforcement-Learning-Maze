@@ -146,9 +146,7 @@ if test == Test.SPEED_TEST_1:
         whist.append(w)
         names.append(model.name)
 
-    f, (rhist_ax, whist_ax) = plt.subplots(
-        2, len(models_to_run), sharex="row", sharey="row", tight_layout=True
-    )
+    f, (rhist_ax, whist_ax) = plt.subplots(2, len(models_to_run), sharex="row", sharey="row", tight_layout=True)
 
     for i in range(len(rhist)):
         rhist_ax[i].set_title(names[i])
@@ -212,9 +210,7 @@ if test == Test.SPEED_TEST_2:
         sec.append(seconds)
         nme.append(model.name)
 
-    f, (epi_ax, sec_ax) = plt.subplots(
-        2, len(models_to_run), sharex="row", sharey="row", tight_layout=True
-    )
+    f, (epi_ax, sec_ax) = plt.subplots(2, len(models_to_run), sharex="row", sharey="row", tight_layout=True)
 
     for i in range(len(epi)):
         epi_ax[i].set_title(nme[i])

@@ -17,9 +17,7 @@ class SarsaTableModel(AbstractModel):
     ends after a fixed number of games, or earlier if a stopping criterion is reached (here: a 100% win rate).
     """
 
-    default_check_convergence_every = (
-        5  # by default check for convergence every # episodes
-    )
+    default_check_convergence_every = 5  # by default check for convergence every # episodes
 
     def __init__(self, game, **kwargs):
         """Create a new prediction model for 'game'.
@@ -45,14 +43,10 @@ class SarsaTableModel(AbstractModel):
         """
         discount = kwargs.get("discount", 0.90)
         exploration_rate = kwargs.get("exploration_rate", 0.10)
-        exploration_decay = kwargs.get(
-            "exploration_decay", 0.995
-        )  # % reduction per step = 100 - exploration decay
+        exploration_decay = kwargs.get("exploration_decay", 0.995)  # % reduction per step = 100 - exploration decay
         learning_rate = kwargs.get("learning_rate", 0.10)
         episodes = max(kwargs.get("episodes", 1000), 1)
-        check_convergence_every = kwargs.get(
-            "check_convergence_every", self.default_check_convergence_every
-        )
+        check_convergence_every = kwargs.get("check_convergence_every", self.default_check_convergence_every)
 
         # variables for reporting purposes
         cumulative_reward = 0
@@ -71,9 +65,7 @@ class SarsaTableModel(AbstractModel):
             start_list.remove(start_cell)
 
             state = self.environment.reset(start_cell)
-            state = tuple(
-                state.flatten()
-            )  # change np.ndarray to tuple so it can be used as dictionary key
+            state = tuple(state.flatten())  # change np.ndarray to tuple so it can be used as dictionary key
 
             if np.random.random() < exploration_rate:
                 action = random.choice(self.environment.actions)
@@ -84,9 +76,7 @@ class SarsaTableModel(AbstractModel):
 
                 next_state, reward, status = self.environment.step(action)
                 next_state = tuple(next_state.flatten())
-                next_action = self.predict(
-                    next_state
-                )  # use the model to get the next action
+                next_action = self.predict(next_state)  # use the model to get the next action
 
                 cumulative_reward += reward
 
@@ -98,9 +88,7 @@ class SarsaTableModel(AbstractModel):
 
                 next_Q = self.Q.get((next_state, next_action), 0.0)
 
-                self.Q[(state, action)] += learning_rate * (
-                    reward + discount * next_Q - self.Q[(state, action)]
-                )
+                self.Q[(state, action)] += learning_rate * (reward + discount * next_Q - self.Q[(state, action)])
 
                 if status in (
                     Status.WIN,
@@ -132,11 +120,7 @@ class SarsaTableModel(AbstractModel):
 
             exploration_rate *= exploration_decay  # explore less as training progresses
 
-        logging.info(
-            "episodes: {:d} | time spent: {}".format(
-                episode, datetime.now() - start_time
-            )
-        )
+        logging.info("episodes: {:d} | time spent: {}".format(episode, datetime.now() - start_time))
 
         return (
             cumulative_reward_history,
@@ -150,9 +134,7 @@ class SarsaTableModel(AbstractModel):
         if type(state) == np.ndarray:
             state = tuple(state.flatten())
 
-        return np.array(
-            [self.Q.get((state, action), 0.0) for action in self.environment.actions]
-        )
+        return np.array([self.Q.get((state, action), 0.0) for action in self.environment.actions])
 
     def predict(self, state):
         """Policy: choose the action with the highest value from the Q-table.
@@ -165,7 +147,5 @@ class SarsaTableModel(AbstractModel):
 
         logging.debug("q[] = {}".format(q))
 
-        actions = np.nonzero(q == np.max(q))[
-            0
-        ]  # get index of the action(s) with the max value
+        actions = np.nonzero(q == np.max(q))[0]  # get index of the action(s) with the max value
         return random.choice(actions)
