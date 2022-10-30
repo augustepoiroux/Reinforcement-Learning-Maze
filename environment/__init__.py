@@ -1,2 +1,1 @@
-from .maze import Maze
-from .maze import Status
+from .maze import Maze, Status

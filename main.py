@@ -2,9 +2,8 @@ import logging
 from enum import Enum, auto
 
 import matplotlib.pyplot as plt
-import numpy as np
-
 import models
+import numpy as np
 from environment.maze import Maze, Render
 
 logging.basicConfig(

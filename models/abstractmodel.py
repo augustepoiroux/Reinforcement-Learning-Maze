@@ -1,6 +1,7 @@
 """ Abstract base class for prediction models.
 """
 from abc import ABC, abstractmethod
+
 from discrete_maze.environment import Maze
 
 

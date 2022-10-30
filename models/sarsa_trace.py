@@ -3,7 +3,6 @@ import random
 from datetime import datetime
 
 import numpy as np
-
 from discrete_maze.environment import Status
 from models import AbstractModel
 
