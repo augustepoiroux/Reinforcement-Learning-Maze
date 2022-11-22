@@ -2,9 +2,9 @@ import logging
 from enum import Enum, auto
 
 import matplotlib.pyplot as plt
-import models
+import src.models as models
 import numpy as np
-from environment.maze import Maze, Render
+from src.environment.maze import Maze, Render
 
 logging.basicConfig(
     format="%(levelname)-8s: %(asctime)s: %(message)s",
