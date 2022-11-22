@@ -1,6 +1,7 @@
 import random
 
 import numpy as np
+
 from . import AbstractModel
 
 

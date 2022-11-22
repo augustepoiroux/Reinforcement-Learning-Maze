@@ -3,6 +3,7 @@ import random
 from datetime import datetime
 
 import numpy as np
+
 from ..environment import Status
 from . import AbstractModel
 
